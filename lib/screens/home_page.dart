@@ -1,5 +1,6 @@
 import 'package:chat_app/screens/group_page.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -13,6 +14,7 @@ class _HomePageState extends State<HomePage> {
   // TextEditingController passController = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
+  var uuid = Uuid();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,7 +41,11 @@ class _HomePageState extends State<HomePage> {
                   color: Colors.green,
                   child: const Text(
                     'Mate',
-                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.w600, color: Colors.white,),
+                    style: TextStyle(
+                      fontSize: 25,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ],
@@ -99,7 +105,10 @@ class _HomePageState extends State<HomePage> {
                   nameController.clear();
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (_) => GroupPage(name: name),
+                      builder: (_) => GroupPage(
+                        name: name,
+                        userId: uuid.v1(),
+                      ),
                     ),
                   );
                 }

@@ -7,7 +7,8 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class GroupPage extends StatefulWidget {
   final String name;
-  const GroupPage({super.key, required this.name});
+  final String userId;
+  const GroupPage({super.key, required this.name, required this.userId});
 
   @override
   State<GroupPage> createState() => _GroupPageState();
@@ -36,17 +37,19 @@ class _GroupPageState extends State<GroupPage> {
         'sendMsgServer',
         (msg) {
           print(msg);
-          setState(
-            () {
-              listMsg.add(
-                MsgModel(
-                  type: msg['type'],
-                  msg: msg['msg'],
-                  sender: msg['senderName'],
-                ),
-              );
-            },
-          );
+          if (msg['userId' != widget.userId]) {
+            setState(
+              () {
+                listMsg.add(
+                  MsgModel(
+                    type: msg['type'],
+                    msg: msg['msg'],
+                    sender: msg['senderName'],
+                  ),
+                );
+              },
+            );
+          }
         },
       );
     });
@@ -63,6 +66,7 @@ class _GroupPageState extends State<GroupPage> {
       'type': 'ownMsg',
       'msg': msg,
       'senderName': senderName,
+      'userId': widget.userId,
     });
   }
 
@@ -70,7 +74,7 @@ class _GroupPageState extends State<GroupPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Groups'),
+        title: const Text('Anon-room'),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),

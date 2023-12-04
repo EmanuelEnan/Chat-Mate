@@ -12,10 +12,12 @@ app.route('/').get((req, res) => {
 })
 
 io.on('connection', (socket) => {
+    socket.join('anon-room')
     console.log('backend connected');
     socket.on('sendMsg', (msg) => {
         console.log('msg', msg);
-        socket.emit('sendMsgServer', { ...msg, type: 'othermsg' });
+        // socket.emit('sendMsgServer', { ...msg, type: 'othermsg' });
+        io.to('anon-room').emit('sendMsgServer', { ...msg, type: 'othermsg' });
     })
 })
 
