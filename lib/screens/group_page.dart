@@ -37,7 +37,7 @@ class _GroupPageState extends State<GroupPage> {
         'sendMsgServer',
         (msg) {
           print(msg);
-          if (msg['userId' != widget.userId]) {
+          if (msg['userId'] != widget.userId) {
             setState(
               () {
                 listMsg.add(
